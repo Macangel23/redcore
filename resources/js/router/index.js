@@ -1,10 +1,15 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import AuthViewPage from '@/pages/views/auth-view/auth-view.vue';
-import MainViewPage from '@/pages/views/main-view/main-view.vue';
+// import AuthViewPage from '@/pages/views/auth-view/auth-view.vue';
+const AuthViewPage = () => import('@/pages/views/auth-view/auth-view.vue')
+// import MainViewPage from '@/pages/views/main-view/main-view.vue';
+const MainViewPage = () => import('@/pages/views/main-view/main-view.vue')
 
-import LoginPage from '@/pages/views/auth-view/login/login-page.vue';
-import DashboardPage from '@/pages/views/main-view/dashboard/dashboard-page.vue';
-import UserPage from '@/pages/views/main-view/user/user-page.vue';
+// import LoginPage from '@/pages/views/auth-view/login/login-page.vue';
+// import DashboardPage from '@/pages/views/main-view/dashboard/dashboard-page.vue';
+// import UserPage from '@/pages/views/main-view/user/user-page.vue';
+const LoginPage = () => import('@/pages/views/auth-view/login/login-page.vue')
+const DashboardPage = () => import('@/pages/views/main-view/dashboard/dashboard-page.vue')
+const UserPage = () => import('@/pages/views/main-view/user/user-page.vu')
 
 
 const routes = [

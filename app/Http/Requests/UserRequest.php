@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class UserRequest extends FormRequest
 {
@@ -23,12 +24,12 @@ class UserRequest extends FormRequest
      */
     public function rules()
     { 
-        $user_id = isset($this->user->id) ? $this->user->id : '';
+        $user_id = isset($this->user) ? $this->user : '';
         return [
-            'full_name' => 'required',
+            'full_name' => 'requiredunique:users,full_name,'.$user_id.',id',
             'email' => 'required|email|unique:users,email,'.$user_id.',id',
             'password' => 'required|min:8',
-            'cpassword' => 'required|min:8',
+            'cpassword' => 'required|same:password|min:8',
             'role_id' => 'required'
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -42,15 +43,16 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Role $roles)
+    public function store(RoleRequest $request, Role $roles)
     {
         try {
             return response()->json([
                 'role' => $roles->create($request->validated())
             ]);
-        } catch(\Exception) {
+        } catch(\Exception $e) {
             return response()->json([
-                'error_message' => 'Oops, something went wrong'
+                // 'error_message' => 'Oops, something went wrong'
+                'error_message' => $e->getMessage()
             ]);
         }
     }
@@ -84,7 +86,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $roles)
+    public function update(RoleRequest $request, Role $roles)
     {
         try {
             return response()->json([
@@ -103,11 +105,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $roles)
+    public function destroy(Role $roles,$id)
     {
         try {
+            $roles->destroy($id);
             return response()->json([
-                'role' => $roles->delete()
+                'message' => "Role successfully deleted"
             ]);
         } catch(\Exception) {
             return response()->json([

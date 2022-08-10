@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -42,15 +43,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,User $users)
+    public function store(UserRequest $request,User $users)
     {
         try {
             return response()->json([
                 'users' => $users->create($request->validated())
             ]);
-        } catch(\Exception) {
+        } catch(\Exception $e) {
             return response()->json([
-                'error_message' => 'Oops, something went wrong'
+                // 'error_message' => 'Oops, something went wrong'
+                'error_message' => $e->getMessage()
             ]);
         }
     }
@@ -84,8 +86,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $users)
+    public function update(UserRequest $request, User $users)
     {
+        return $request;
         try {
             return response()->json([
                 'users' => $users->fill($request->validated())->save()
@@ -103,11 +106,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $users)
+    public function destroy(User $users,$id)
     {
         try {
+            $users->destroy($id);
             return response()->json([
-                'users' => $users->delete()
+                'message' => "User successfully deleted"
             ]);
         } catch(\Exception) {
             return response()->json([
