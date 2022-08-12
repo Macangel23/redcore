@@ -14,11 +14,11 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Role $roles)
+    public function index(Role $role)
     {
         try {
             return response()->json([
-                'roles' => $roles->all()
+                'roles' => $role->all()
             ]);
         } catch(\Exception) {
             return response()->json([
@@ -43,11 +43,11 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleRequest $request, Role $roles)
+    public function store(RoleRequest $request, Role $role)
     {
         try {
             return response()->json([
-                'role' => $roles->create($request->validated())
+                'role' => $role->create($request->validated())
             ]);
         } catch(\Exception $e) {
             return response()->json([
@@ -63,9 +63,17 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
+        try {
+            return response()->json([
+                'role' => $role
+            ]);
+        } catch(\Exception) {
+            return response()->json([
+                'error_message' => 'Oops, something went wrong'
+            ]);
+        }
     }
 
     /**
@@ -86,11 +94,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleRequest $request, Role $roles)
+    public function update(RoleRequest $request, Role $role)
     {
         try {
             return response()->json([
-                'role' => $roles->fill($request->validated())->save()
+                'role' => $role->fill($request->validated())->save()
             ]);
         } catch(\Exception) {
             return response()->json([
@@ -105,10 +113,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $roles,$id)
+    public function destroy(Role $role,$id)
     {
         try {
-            $roles->destroy($id);
+            $role->destroy($id);
             return response()->json([
                 'message' => "Role successfully deleted"
             ]);

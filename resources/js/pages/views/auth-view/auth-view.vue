@@ -1,14 +1,14 @@
 <template>
-    <div>
-        <router-view></router-view>
-    </div>
+    <RouterView/>
 </template>
 <script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+import { RouterView } from 'vue-router';
+export default ({
+    components: {
+        RouterView
+    },
     setup() {
-        
+       console.log("auth-view"); 
     },
 })
 </script>

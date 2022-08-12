@@ -14,11 +14,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $users)
+    public function index(User $user)
     {
         try {
             return response()->json([
-                'users' => $users->all()
+                'users' => $user->all()
             ]);
         } catch(\Exception) {
             return response()->json([
@@ -43,11 +43,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request,User $users)
+    public function store(UserRequest $request,User $user)
     {
         try {
             return response()->json([
-                'users' => $users->create($request->validated())
+                'user' => $user->create($request->validated())
             ]);
         } catch(\Exception $e) {
             return response()->json([
@@ -63,9 +63,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        try {
+            return response()->json([
+                'user' => $user
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                // 'error_message' => 'Oops, something went wrong'
+                'error_message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -86,12 +95,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $users)
+    public function update(UserRequest $request, User $user)
     {
         return $request;
         try {
             return response()->json([
-                'users' => $users->fill($request->validated())->save()
+                'user' => $user->fill($request->validated())->save()
             ]);
         } catch(\Exception) {
             return response()->json([
@@ -106,10 +115,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $users,$id)
+    public function destroy(User $user,$id)
     {
         try {
-            $users->destroy($id);
+            $user->destroy($id);
             return response()->json([
                 'message' => "User successfully deleted"
             ]);
